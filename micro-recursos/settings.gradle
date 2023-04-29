@@ -1,0 +1,56 @@
+import org.gradle.api.initialization.resolve.RepositoriesMode
+
+// Gradle plugin repositories
+pluginManagement {
+    repositories {
+        maven {
+            url "https://maven.stardog.com"
+            allowInsecureProtocol = true
+        }
+        maven {
+            url "https://repo.osgeo.org/repository/release/"
+            allowInsecureProtocol = true
+        }
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+        mavenCentral()
+        gradlePluginPortal()
+        google()
+    }
+}
+
+// Java project repositories
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
+    repositories {
+        maven {
+            url "org.springframework.boot"
+            allowInsecureProtocol = true
+        }
+
+
+        maven {
+            url "https://maven.stardog.com"
+            allowInsecureProtocol = true
+        }
+        maven {
+            url "https://repo.osgeo.org/repository/release/"
+            allowInsecureProtocol = true
+        }
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+        mavenCentral()
+        gradlePluginPortal()
+        google()
+    }
+
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
+    repositories {
+        mavenCentral()
+    }
+}
+rootProject.name = 'resources'
