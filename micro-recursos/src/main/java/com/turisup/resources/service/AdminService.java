@@ -155,6 +155,10 @@ public class AdminService {
     }
 
     public Boolean updatePlacefromWeb(UpdatePlaceRequest placeUpdateRequest, MultipartFile[] files) {
+
+
+
+
         try (Connection myConnection = DBConnection.createConnection()) {
             Model myModel = SDJenaFactory.createModel(myConnection);
             Resource placeResource = myModel.getResource(BASE + "/lugar/" + placeUpdateRequest.getPlaceid());
@@ -169,7 +173,9 @@ public class AdminService {
                     String routeFile = fileStorageService.storeFile(file, placeUpdateRequest.getPlaceid());
                     String checkFile = Utils.getTypeOfFile(routeFile);
                     if(checkFile.equals("isImage")){
+
                         String imageId = FacebookService.UploadImage(routeFile);
+                        System.out.println(imageId);
                         placeUpdateRequest.getFbImagesId().add(imageId);
 
                     }else if(checkFile.equals("isVideo")){
@@ -203,9 +209,13 @@ public class AdminService {
 
             //Borro los contenedores previamente creado (no los actualizo xq no hay metodo para eliminar)
             Bag fbImagesId = placeResource.getProperty(myModel.getProperty(BASE,"#facebookId")).getBag();
-            Bag fbVideoId = placeResource.getProperty(myModel.getProperty(BASE,"#facebookVideoId")).getBag();
             myModel.remove(placeResource,myModel.getProperty(BASE,"#facebookId"),fbImagesId);
-            myModel.remove(placeResource,myModel.getProperty(BASE,"#fbVideoId"),fbVideoId);
+
+
+                Bag fbVideoId = placeResource.getProperty(myModel.getProperty(BASE,"#facebookVideoId")).getBag();
+                myModel.remove(placeResource,myModel.getProperty(BASE,"#fbVideoId"),fbVideoId);
+
+
             //Creo nuevamente los contenedores
             Bag facebookImageIds = myModel.createBag();
             Bag facebookVideoIds = myModel.createBag();
@@ -216,8 +226,9 @@ public class AdminService {
                 facebookVideoIds.add(placeUpdateRequest.getFbVideoId().get(i));
             }
             for(int i=0; i< placeUpdateRequest.getFbImagesId().size();i++){
+                System.out.println("debe entrar");
                 placeResource.addProperty(VCARD4.hasPhoto,(FacebookService.urlImageByIdImage(placeUpdateRequest.getFbImagesId().get(i))));
-                facebookVideoIds.add(placeUpdateRequest.getFbImagesId().get(i));
+                facebookImageIds.add(placeUpdateRequest.getFbImagesId().get(i));
             }
 
             myModel.commit();

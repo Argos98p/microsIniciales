@@ -26,8 +26,15 @@ public class Parser {
         String orgName = soln.getLiteral("orgName").toString();
         String orgId= soln.getResource("org").getLocalName();
 
+
         String creadoPor= soln.getResource("creador").toString().replace("http://turis-ucuenca/user/","");
-        String nombreCreador=soln.getLiteral("nombre").toString();
+        String nombreCreador="";
+        String imageUser = "";
+        if(soln.getLiteral("nombre")!=null){
+             nombreCreador=soln.getLiteral("nombre").toString();
+            imageUser = soln.getResource("creadorImage").toString();
+        }
+
 
         String region = soln.getLiteral("regionTitulo").toString();
         String regionId= soln.getResource("region").getLocalName();
@@ -38,7 +45,7 @@ public class Parser {
         String titulo = soln.getLiteral("titulo").toString();
         String descripcion = soln.getLiteral("descripcion").toString();
         String favorito = soln.getLiteral("favorito").toString();
-        String imageUser = soln.getResource("creadorImage").toString();
+
 
 
         ArrayList<String> facebookImagesIds= new ArrayList( Arrays.asList( soln.getLiteral("fbIDs").toString().split(",") ) );

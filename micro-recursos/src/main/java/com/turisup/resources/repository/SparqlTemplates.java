@@ -169,8 +169,10 @@ public class SparqlTemplates {
                 "?place geo:hasGeometry ?geom."+
                 "OPTIONAL { ?place dc:date ?date . }"+
                 "BIND (if(EXISTS{?place base2:isFavoriteOf <http://turis-ucuenca/user/"+queryOptions.getUserId()+">}, \"si\",\"no\") as ?favorito)"+
-                "?creador foaf:name ?nombre."+
-                "    ?creador foaf:depiction ?creadorImage."+
+                "OPTIONAL{\n" +
+                "     ?creador foaf:name ?nombre.\n" +
+                "    ?creador foaf:depiction ?creadorImage.  \n" +
+                "         }"+
 
                 "?faceboook_id_node ?prop ?idFacebook."+
                 "?geom geo:asWKT ?point ."+

@@ -1,6 +1,7 @@
 package com.turisup.resources.api;
 
 import com.google.api.Http;
+import com.google.gson.Gson;
 import com.turisup.resources.model.admin.AdminUserResource;
 import com.turisup.resources.model.request.get.AdminUser;
 import com.turisup.resources.model.request.post.PlaceRequest;
@@ -12,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -36,8 +39,13 @@ public class AdminController {
     }
 
     @PostMapping("actualizar-recurso")
-    public ResponseEntity updatePlace2(@RequestBody UpdatePlaceRequest placeUpdateRequest,@RequestParam("files") MultipartFile[] files){
-        Boolean response = adminService.updatePlacefromWeb(placeUpdateRequest,files);
+    public ResponseEntity updatePlace2(@RequestParam("data")String placeUpdateRequest,@RequestParam(required = false ) MultipartFile[] files){
+        if(files == null){
+            files= new MultipartFile[]{};
+        }
+        Gson g = new Gson();
+        UpdatePlaceRequest updatePlaceRequest = g.fromJson(placeUpdateRequest, UpdatePlaceRequest.class);
+        Boolean response = adminService.updatePlacefromWeb(updatePlaceRequest,files);
         if(response){
             return ResponseEntity.ok().body("Recurso actualizado");
         }else{

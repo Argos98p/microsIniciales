@@ -190,8 +190,6 @@ public class CommentService {
                     }
 
 
-
-
                     comentario.put("comentario",soln.getLiteral("comentario").toString());
                     comentario.put("puntaje", soln.getLiteral("puntaje").getInt());
                     comentario.put("id",coment.toString().replace("http://turis-ucuenca/comentario/",""));
@@ -249,14 +247,20 @@ public class CommentService {
                         myModel.remove(s);
                         System.out.println(s);
                     }
-                    Bag imagesId = myModel.getBag(soln.getResource("images_id_node"));
-                    NodeIterator iter = imagesId.iterator();
-                    while (iter.hasNext()) {
-                        RDFNode ImageBagItem = iter.nextNode();
-                        System.out.println(ImageBagItem.toString());
-                        String urlImage = FacebookService.urlImageByIdImage(ImageBagItem.toString());
-                        comentario.addProperty(VCARD4.hasPhoto,urlImage);
+                    System.out.println(comentario.toString());
+
+
+                    if(soln.getResource("images_id_node")!=null){
+                        Bag imagesId = myModel.getBag(soln.getResource("images_id_node"));
+                        NodeIterator iter = imagesId.iterator();
+                        while (iter.hasNext()) {
+                            RDFNode ImageBagItem = iter.nextNode();
+                            System.out.println(ImageBagItem.toString());
+                            String urlImage = FacebookService.urlImageByIdImage(ImageBagItem.toString());
+                            comentario.addProperty(VCARD4.hasPhoto,urlImage);
+                        }
                     }
+
 
 
                 }
