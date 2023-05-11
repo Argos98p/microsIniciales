@@ -250,7 +250,7 @@ public class CommentService {
                     System.out.println(comentario.toString());
 
 
-                    if(soln.getResource("images_id_node")!=null){
+                    if(soln.getResource("images_id_node") != null && myModel.getBag(soln.getResource("images_id_node")) != null){
                         Bag imagesId = myModel.getBag(soln.getResource("images_id_node"));
                         NodeIterator iter = imagesId.iterator();
                         while (iter.hasNext()) {

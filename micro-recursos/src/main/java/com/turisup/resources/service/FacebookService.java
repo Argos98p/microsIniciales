@@ -15,6 +15,8 @@ import java.io.*;
 
 public class FacebookService {
 
+    static String  ACCESSTOKEN = "";
+
     String APPSECRET = "a368875014f7654717a2e1f24c07b98c";
     static String PAGEID= "165980483492633";
     static DefaultFacebookClient facebookClient = new DefaultFacebookClient(ACCESSTOKEN,  Version.LATEST);
